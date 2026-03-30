@@ -1,4 +1,4 @@
-**BoticShieldV1** 
+
 **<h1> BoticShieldV1</h1>**
 <img width="881" height="846" alt="BoticsSheildV1" src="https://github.com/user-attachments/assets/fa18005a-ceb0-4d60-ac3c-1eb7f32861e7" />
 <div align="center">
