@@ -2,10 +2,6 @@
 
 <h1> BoticShieldV1</h1>
 
-<img width="2000" height="2000" alt="boticssheildfrontpng" src="https://github.com/user-attachments/assets/d2b2c251-fde5-41b1-b1aa-b70df21e2a60" />
-
-<img width="2000" height="2000" alt="Boticsdsheildoublepng" src="https://github.com/user-attachments/assets/4b11ddf3-84a7-47ef-9954-c6b2d3eb4633" />
-
 <h3>Official Arduino Library for the Botic Shield V1</h3>
 
 <p><em>A powerful yet beginner-friendly library to control 4-wheel differential-drive robots<br>
@@ -18,6 +14,11 @@ using a custom-designed Arduino shield built with the L293D motor driver and 74H
 [![License](https://img.shields.io/badge/License-MIT-brightgreen?style=for-the-badge)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-UNO%20%7C%20Nano%20%7C%20Mega-orange?style=for-the-badge)]()
 [![Stars](https://img.shields.io/github/stars/raunakchoudhary/BoticShieldV1?style=for-the-badge&color=yellow)]()
+
+
+<img width="2000" height="2000" alt="boticssheildfrontpng" src="https://github.com/user-attachments/assets/d2b2c251-fde5-41b1-b1aa-b70df21e2a60" />
+
+<img width="2000" height="2000" alt="Boticsdsheildoublepng" src="https://github.com/user-attachments/assets/4b11ddf3-84a7-47ef-9954-c6b2d3eb4633" />
 
 <br>
 
