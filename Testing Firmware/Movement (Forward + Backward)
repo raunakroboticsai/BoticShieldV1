@@ -1,0 +1,73 @@
+// -------- SHIFT REGISTER PINS --------
+#define DATA 11
+#define CLOCK 13
+#define LATCH 10
+
+// -------- L293D ENABLE PINS --------
+#define EN1 3
+#define EN2 6
+
+// -------- FUNCTION TO SEND DATA --------
+void sendData(byte data) {
+  digitalWrite(LATCH, LOW);
+  shiftOut(DATA, CLOCK, MSBFIRST, data);
+  digitalWrite(LATCH, HIGH);
+}
+
+// -------- MOTOR CONTROL FUNCTIONS --------
+
+// FORWARD (fixed for M1 & M3)
+void forward() {
+  sendData(B01100110);
+}
+
+// BACKWARD
+void backward() {
+  sendData(B10011001);
+}
+
+// STOP
+void stopMotor() {
+  sendData(B00000000);
+}
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(DATA, OUTPUT);
+  pinMode(CLOCK, OUTPUT);
+  pinMode(LATCH, OUTPUT);
+
+  pinMode(EN1, OUTPUT);
+  pinMode(EN2, OUTPUT);
+
+  // Enable motors (speed control)
+  analogWrite(EN1, 200);
+  analogWrite(EN2, 200);
+
+  Serial.println("FULL MOTOR TEST START");
+}
+
+void loop() {
+
+  // -------- FORWARD --------
+  forward();
+  Serial.println("Moving Forward");
+  delay(4000);
+
+  // -------- STOP --------
+  stopMotor();
+  Serial.println("Stop");
+  delay(2000);
+
+  // -------- BACKWARD --------
+  backward();
+  Serial.println("Moving Backward");
+  delay(4000);
+
+  // -------- STOP --------
+  stopMotor();
+  Serial.println("Stop");
+  delay(3000);
+}
+
