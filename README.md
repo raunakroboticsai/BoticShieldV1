@@ -41,7 +41,6 @@ void loop()  { robot.forward(); }
 
 </div>
 
-## 🛡️ What is Botic Shield V1?
 
 ## 🔷 What is Botic Shield V1?
 
@@ -92,7 +91,6 @@ This library (**BoticShieldV1**) is the official software companion for the shie
 |-------|-----------|
 | Arduino UNO R3 | ✅ |
 | Arduino UNO R4 | ✅ |
-| Arduino Nano | ✅ |
 
 ---
 
