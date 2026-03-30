@@ -1,6 +1,8 @@
 <div align="center">
 
-<h1>🤖 BoticShieldV1</h1>
+<h1> BoticShieldV1</h1>
+
+<img width="881" height="846" alt="BoticsSheildV1pNG" src="https://github.com/user-attachments/assets/f92921cf-ec60-45ec-887c-156c68652527" />
 
 <h3>Official Arduino Library for the Botic Shield V1</h3>
 
