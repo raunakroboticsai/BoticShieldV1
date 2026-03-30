@@ -3,7 +3,7 @@ Arduino motor control library for Botic Shield V1 — L293D + 74HC595 based cust
 <img width="881" height="846" alt="BoticsSheildV1" src="https://github.com/user-attachments/assets/fa18005a-ceb0-4d60-ac3c-1eb7f32861e7" />
 <div align="center">
 
-<h1>🤖 BoticShieldV1</h1>
+<h1> BoticShieldV1</h1>
 
 <h3>Official Arduino Library for the Botic Shield V1</h3>
 
@@ -33,18 +33,18 @@ void loop()  { robot.forward(); }
 
 <br>
 
-[📦 Install Now](#-installation) &nbsp;·&nbsp;
-[⚡ Quick Start](#-quick-start) &nbsp;·&nbsp;
-[📚 Full API](#-complete-api-reference) &nbsp;·&nbsp;
-[🔧 Hardware Docs](#-hardware-deep-dive) &nbsp;·&nbsp;
-[💡 Examples](#-examples-in-detail) &nbsp;·&nbsp;
-[🛠️ Troubleshoot](#%EF%B8%8F-troubleshooting-guide)
+[ Install Now](#-installation) &nbsp;·&nbsp;
+[ Quick Start](#-quick-start) &nbsp;·&nbsp;
+[ Full API](#-complete-api-reference) &nbsp;·&nbsp;
+[ Hardware Docs](#-hardware-deep-dive) &nbsp;·&nbsp;
+[ Examples](#-examples-in-detail) &nbsp;·&nbsp;
+[ Troubleshoot](#%EF%B8%8F-troubleshooting-guide)
 
 </div>
 
 ---
 
-## 📖 Table of Contents
+##  Table of Contents
 
 1. [What is Botic Shield V1?](#-what-is-botic-shield-v1)
 2. [Why This Shield Exists](#-why-this-shield-exists)
@@ -71,11 +71,11 @@ void loop()  { robot.forward(); }
 7. [Motor Direction Logic](#-motor-direction-logic)
 8. [74HC595 Bit Map Reference](#-74hc595-bit-map-reference)
 9. [Examples in Detail](#-examples-in-detail)
-10. [Non-Blocking Movement](#-non-blocking-movement-with-millis)
-11. [Bluetooth Robot Project](#-complete-bluetooth-robot-project)
-12. [Troubleshooting Guide](#%EF%B8%8F-troubleshooting-guide)
-13. [Compatibility](#-board-compatibility)
-14. [Repository Structure](#%EF%B8%8F-repository-structure)
+10. [Sensor & Peripheral Testing Guide)
+11. [Non-Blocking Movement](#-non-blocking-movement-with-millis)
+12. [Bluetooth Robot Project](#-complete-bluetooth-robot-project)
+13. [Troubleshooting Guide](#%EF%B8%8F-troubleshooting-guide)
+14. [Compatibility](#-board-compatibility)
 15. [How It Works Internally](#-how-it-works-internally)
 16. [Contributing](#-contributing)
 17. [Changelog](#-changelog)
@@ -85,17 +85,34 @@ void loop()  { robot.forward(); }
 
 ##  What is Botic Shield V1?
 
-**Botic Shield V1** is a custom-designed Arduino shield created specifically for building 4-wheel differential-drive robots. It is a plug-on board that sits directly on top of an Arduino UNO or Nano and gives you complete control over 4 DC motors using a minimal number of Arduino I/O pins.
+Botic Shield V1 is a custom-designed Arduino shield created specifically for building 4-wheel differential-drive robots. It is a plug-on board that sits directly on top of an Arduino UNO or Nano and gives you complete control over 4 DC motors using a minimal number of Arduino I/O pins.
 
-The shield was designed and built by **Raunak Choudhary** as a personal robotics project. The design philosophy was simple:
 
-> *Make motor control so easy that anyone — even a beginner — can get a robot moving in under 5 minutes.*
+Make motor control so easy that anyone — even a beginner — can get a robot moving in under 5 minutes.
 
-This library (`BoticShieldV1`) is the official software companion for the shield. It abstracts away all the low-level hardware communication and gives you clean, readable function calls like `robot.forward()`, `robot.left()`, and `robot.setSpeed(200)`.
+This library (BoticShieldV1) is the official software companion for the shield. It abstracts away all the low-level hardware communication and gives you clean, readable function calls like robot.forward(), robot.left(), and robot.setSpeed(200).
 
+🔷 Features
+🔹 4 DC Motor Control using dual L293DNE
+🔹 Efficient Pin Usage with 74HC595 (control 4 motors using only 3 Arduino pins)
+🔹 Supports complete robot movement:
+Forward
+Backward
+Left Turn
+Right Turn
+🔹 Built-in PWM Speed Control for smooth and adjustable motion
+🔹 3 Ultrasonic Sensor Ports for obstacle detection and distance measurement
+🔹 3 Servo Motor Ports for scanning, pan-tilt, or gripper mechanisms
+🔹 2 IR Sensor Inputs for line following and object detection
+🔹 I2C Interface (SDA – A4, SCL – A5) for LCD displays and other I2C devices
+🔹 Clean header-based layout for easy plug-and-play connections
+🔹 Supports external motor power supply for stable and high-current operation
+🔹 Includes power protection (diode) and basic decoupling for reliability
+🔹 Fully compatible with the BoticShieldV1 Arduino library
+🔹 Beginner-friendly yet powerful enough for advanced robotics applications
 ---
 
-## 💡 Why This Shield Exists
+## Why This Shield Exists
 
 ### The Problem with Standard L293D Wiring
 
@@ -446,7 +463,7 @@ void loop() {}
 
 ---
 
-## 📚 Complete API Reference
+## Complete API Reference
 
 ### Constructor
 
@@ -828,7 +845,7 @@ stop()        0b00000000    0x00      0
 
 ---
 
-## 💡 Examples in Detail
+## Examples in Detail
 
 The library comes with three examples, accessible via:
 `File → Examples → BoticShieldV1 → [Example Name]`
@@ -1164,8 +1181,182 @@ void executeCommand(char cmd) {
 
 **App to use:** Download **"Bluetooth RC Controller"** on Android → Connect to HC-05 → Set button characters to F/B/L/R/S → Drive!
 
----
+## **Sensor & Peripheral Testing Guide**
 
+This section provides independent test programs for all onboard peripherals of the Botic Shield V1.
+Use these codes to verify hardware functionality before integrating into your main robot project.
+
+**1. Ultrasonic Sensor Test (3 Sensors)**
+Connections
+Sensor 1 → TRIG = A0, ECHO = A1
+Sensor 2 → TRIG = A2, ECHO = A3
+Sensor 3 → TRIG = A4, ECHO = A5
+
+⚠️ Note: If using I2C LCD, avoid using A4/A5 (reserved for SDA/SCL)
+
+Code
+#define TRIG1 A0
+#define ECHO1 A1
+
+#define TRIG2 A2
+#define ECHO2 A3
+
+#define TRIG3 A4
+#define ECHO3 A5
+
+long readDistance(int trigPin, int echoPin) {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH);
+  long distance = duration * 0.034 / 2;
+
+  return distance;
+}
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(TRIG1, OUTPUT);
+  pinMode(ECHO1, INPUT);
+
+  pinMode(TRIG2, OUTPUT);
+  pinMode(ECHO2, INPUT);
+
+  pinMode(TRIG3, OUTPUT);
+  pinMode(ECHO3, INPUT);
+}
+
+void loop() {
+  long d1 = readDistance(TRIG1, ECHO1);
+  long d2 = readDistance(TRIG2, ECHO2);
+  long d3 = readDistance(TRIG3, ECHO3);
+
+  Serial.print("Sensor1: ");
+  Serial.print(d1);
+  Serial.print(" cm | ");
+
+  Serial.print("Sensor2: ");
+  Serial.print(d2);
+  Serial.print(" cm | ");
+
+  Serial.print("Sensor3: ");
+  Serial.print(d3);
+  Serial.println(" cm");
+
+  delay(500);
+}
+
+
+**2. Servo Motor Test (3 Servos)**
+Pins
+Servo 1 → D2
+Servo 2 → D4
+Servo 3 → D7
+Code
+#include <Servo.h>
+
+Servo s1;
+Servo s2;
+Servo s3;
+
+void setup() {
+  Serial.begin(9600);
+
+  s1.attach(2);
+  s2.attach(4);
+  s3.attach(7);
+}
+
+void loop() {
+  for (int angle = 0; angle <= 180; angle += 30) {
+    s1.write(angle);
+    s2.write(angle);
+    s3.write(angle);
+
+    Serial.print("Angle: ");
+    Serial.println(angle);
+
+    delay(1000);
+  }
+
+  for (int angle = 180; angle >= 0; angle -= 30) {
+    s1.write(angle);
+    s2.write(angle);
+    s3.write(angle);
+
+    Serial.print("Angle: ");
+    Serial.println(angle);
+
+    delay(1000);
+  }
+}
+
+**3. IR Sensor Test**
+📌 Pins
+IR1 → D12
+IR2 → D8
+Code
+#define IR1 12
+#define IR2 8
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(IR1, INPUT);
+  pinMode(IR2, INPUT);
+}
+
+void loop() {
+  int val1 = digitalRead(IR1);
+  int val2 = digitalRead(IR2);
+
+  Serial.print("IR1: ");
+  Serial.print(val1);
+  Serial.print(" | IR2: ");
+  Serial.println(val2);
+
+  delay(200);
+}
+**Output**
+0 → Object detected
+1 → No object
+ 4. I2C LCD Test
+ Pins
+SDA → A4
+SCL → A5
+
+⚠️ Important: Ensure no other device (like ultrasonic sensors) is connected to A4/A5
+
+**LiquidCrystal_I2C**
+
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+// Change address if needed (0x27 or 0x3F)
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  Serial.begin(9600);
+
+  lcd.init();
+  lcd.backlight();
+
+  lcd.setCursor(0, 0);
+  lcd.print("LCD Test Start");
+
+  Serial.println("LCD Working...");
+}
+
+void loop() {
+  lcd.setCursor(0, 1);
+  lcd.print("Hello Raunak  ");
+
+  
 ## 🛠️ Troubleshooting Guide
 
 ###  Problem: Motors do not spin at all
@@ -1288,35 +1479,6 @@ The L293D is rated for 600mA per channel (1.2A peak). Each IC has 2 channels = 1
 
 > The library uses only standard Arduino functions: `pinMode()`, `digitalWrite()`, `analogWrite()`, and `shiftOut()`. It will compile on any Arduino-compatible board. Physical shield PCB may need adaptation for non-UNO form factors.
 
----
-
-## 🗂️ Repository Structure
-
-```
-BoticShieldV1/
-│
-├── 📁 src/
-│   ├── BoticShieldV1.h           ← Main header: class declaration, constants, full API docs
-│   └── BoticShieldV1.cpp         ← Implementation: all method bodies
-│
-├── 📁 examples/
-│   ├── 📁 BasicControl/
-│   │   └── BasicControl.ino      ← Timed movement sequence — first test sketch
-│   ├── 📁 BluetoothControl/
-│   │   └── BluetoothControl.ino  ← HC-05/HC-06 wireless control via serial commands
-│   └── 📁 SpeedTest/
-│       └── SpeedTest.ino         ← PWM ramp 0→255→0, find motor minimum speed
-│
-├── 📄 README.md                  ← This file — full documentation
-├── 📄 library.properties         ← Arduino Library Manager metadata
-├── 📄 keywords.txt               ← Arduino IDE syntax highlighting definitions
-├── 📄 CONTRIBUTING.md            ← How to contribute to this project
-├── 📄 CHANGELOG.md               ← Full version history
-├── 📄 LICENSE                    ← MIT open-source license
-└── 📄 .gitignore                 ← Ignores build artifacts and OS junk files
-```
-
----
 
 ##  How It Works Internally
 
