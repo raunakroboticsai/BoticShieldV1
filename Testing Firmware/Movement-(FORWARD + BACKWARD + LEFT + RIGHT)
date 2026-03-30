@@ -1,0 +1,91 @@
+// -------- SHIFT REGISTER PINS --------
+#define DATA 11
+#define CLOCK 13
+#define LATCH 10
+
+// -------- L293D ENABLE PINS --------
+#define EN1 3
+#define EN2 6
+
+// -------- FUNCTION --------
+void sendData(byte data) {
+  digitalWrite(LATCH, LOW);
+  shiftOut(DATA, CLOCK, MSBFIRST, data);
+  digitalWrite(LATCH, HIGH);
+}
+
+// -------- MOVEMENTS --------
+
+// Forward
+void forward() {
+  sendData(B01100110);
+}
+
+// Backward
+void backward() {
+  sendData(B10011001);
+}
+
+// Stop
+void stopMotor() {
+  sendData(B00000000);
+}
+
+// LEFT TURN (right motors forward, left stop)
+void leftTurn() {
+  // M1 stop, M2 forward, M3 stop, M4 forward
+  sendData(B01000100);
+}
+
+// RIGHT TURN (left motors forward, right stop)
+void rightTurn() {
+  // M1 forward, M2 stop, M3 forward, M4 stop
+  sendData(B00100010);
+}
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(DATA, OUTPUT);
+  pinMode(CLOCK, OUTPUT);
+  pinMode(LATCH, OUTPUT);
+
+  pinMode(EN1, OUTPUT);
+  pinMode(EN2, OUTPUT);
+
+  analogWrite(EN1, 200);
+  analogWrite(EN2, 200);
+
+  Serial.println("FULL DRIVE TEST START");
+}
+
+void loop() {
+
+  forward();
+  Serial.println("Forward");
+  delay(4000);
+
+  stopMotor();
+  delay(1500);
+
+  backward();
+  Serial.println("Backward");
+  delay(4000);
+
+  stopMotor();
+  delay(1500);
+
+  leftTurn();
+  Serial.println("Left Turn");
+  delay(3000);
+
+  stopMotor();
+  delay(1500);
+
+  rightTurn();
+  Serial.println("Right Turn");
+  delay(3000);
+
+  stopMotor();
+  delay(2000);
+}
