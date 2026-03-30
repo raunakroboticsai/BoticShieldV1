@@ -2,7 +2,9 @@
 
 <h1> BoticShieldV1</h1>
 
-<img width="881" height="846" alt="BoticsSheildV1pNG" src="https://github.com/user-attachments/assets/f92921cf-ec60-45ec-887c-156c68652527" />
+<img width="2000" height="2000" alt="boticssheildfrontpng" src="https://github.com/user-attachments/assets/d2b2c251-fde5-41b1-b1aa-b70df21e2a60" />
+
+<img width="2000" height="2000" alt="Boticsdsheildoublepng" src="https://github.com/user-attachments/assets/4b11ddf3-84a7-47ef-9954-c6b2d3eb4633" />
 
 <h3>Official Arduino Library for the Botic Shield V1</h3>
 
