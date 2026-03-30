@@ -43,31 +43,129 @@ void loop()  { robot.forward(); }
 
 ## 🛡️ What is Botic Shield V1?
 
+## 🔷 What is Botic Shield V1?
+
 **Botic Shield V1** is a custom-designed Arduino shield created specifically for building 4-wheel differential-drive robots. It is a plug-on board that sits directly on top of an Arduino UNO or Nano and gives you complete control over 4 DC motors using a minimal number of Arduino I/O pins.
 
+This library (**BoticShieldV1**) is the official software companion for the shield. It abstracts away all the low-level hardware communication and gives you clean, readable function calls like `robot.forward()`, `robot.left()`, and `robot.setSpeed(200)`.
 
-Make motor control so easy that anyone — even a beginner — can get a robot moving in under 5 minutes.
+---
 
-**This library (BoticShieldV1)** is the official software companion for the shield. It abstracts away all the low-level hardware communication and gives you clean, readable function calls like robot.forward(), robot.left(), and robot.setSpeed(200).
+## 🔷 Features
 
-🔷 Features
-🔹 4 DC Motor Control using dual L293DNE
-🔹 Efficient Pin Usage with 74HC595 (control 4 motors using only 3 Arduino pins)
-🔹 Supports complete robot movement:
-Forward
-Backward
-Left Turn
-Right Turn
-🔹 Built-in PWM Speed Control for smooth and adjustable motion
-🔹 3 Ultrasonic Sensor Ports for obstacle detection and distance measurement
-🔹 3 Servo Motor Ports for scanning, pan-tilt, or gripper mechanisms
-🔹 2 IR Sensor Inputs for line following and object detection
-🔹 I2C Interface (SDA – A4, SCL – A5) for LCD displays and other I2C devices
-🔹 Clean header-based layout for easy plug-and-play connections
-🔹 Supports external motor power supply for stable and high-current operation
-🔹 Includes power protection (diode) and basic decoupling for reliability
-🔹 Fully compatible with the BoticShieldV1 Arduino library
-🔹 Beginner-friendly yet powerful enough for advanced robotics applications
+- 🔹 **4 DC Motor Control** using dual L293DNE motor driver ICs — independent control of all four drive wheels simultaneously
+
+- 🔹 **Efficient Pin Usage** with 74HC595 shift register — control 4 motors using only 3 Arduino I/O pins, leaving the rest free for sensors
+
+- 🔹 **Complete Robot Movement** — full directional support with simple, readable function calls:
+  - `robot.forward()`
+  - `robot.backward()`
+  - `robot.left()`
+  - `robot.right()`
+  - `robot.stop()`
+
+- 🔹 **Built-in PWM Speed Control** — smooth and adjustable motion using hardware PWM, set any speed from 0 to 255 with `robot.setSpeed()`
+
+- 🔹 **3 Ultrasonic Sensor Ports** — dedicated headers for HC-SR04 or compatible sensors, ideal for obstacle detection and distance measurement
+
+- 🔹 **3 Servo Motor Ports** — plug in standard servo motors for scanning turrets, pan-tilt mounts, or gripper mechanisms
+
+- 🔹 **2 IR Sensor Inputs** — onboard headers for infrared line-following sensors and proximity/object detection
+
+- 🔹 **I2C Interface** (SDA – A4, SCL – A5) — for LCD displays, OLED modules, and any other I2C peripherals
+
+- 🔹 **Clean Header-based Layout** — all connectors clearly labeled, no soldering required, snap modules directly into the header pins
+
+- 🔹 **External Motor Power Supply Support** — dedicated motor supply input keeps drive current separate from Arduino logic, no brownouts during motor stall
+
+- 🔹 **Power Protection & Decoupling** — onboard diode for reverse-polarity protection and bypass capacitors for clean, stable operation
+
+- 🔹 **Fully Compatible with the BoticShieldV1 Arduino Library** — designed to work seamlessly with this library out of the box
+
+- 🔹 **Beginner-friendly yet Powerful** — simple enough for first-time builders, capable enough for advanced competition robots and autonomous systems
+
+---
+
+## 🔷 Board Compatibility
+
+| Board | Supported |
+|-------|-----------|
+| Arduino UNO R3 | ✅ |
+| Arduino UNO R4 | ✅ |
+| Arduino Nano | ✅ |
+
+---
+
+## 🔷 Installation
+
+1. Download this repository as a `.zip` file
+2. Open Arduino IDE
+3. Go to **Sketch → Include Library → Add .ZIP Library**
+4. Select the downloaded `.zip` file
+5. Done! The library is ready to use.
+
+---
+
+## 🔷 Quick Start
+
+```cpp
+#include <BoticShieldV1.h>
+
+BoticShieldV1 robot;
+
+void setup() {
+  robot.begin();
+  robot.setSpeed(200);   // Speed range: 0 to 255
+}
+
+void loop() {
+  robot.forward();       // Move forward
+  delay(1000);
+
+  robot.left();          // Turn left
+  delay(500);
+
+  robot.backward();      // Move backward
+  delay(1000);
+
+  robot.right();         // Turn right
+  delay(500);
+
+  robot.stop();          // Stop the robot
+  delay(500);
+}
+```
+
+---
+
+## 🔷 Pin Map
+
+| Function | Arduino Pin | Component |
+|----------|-------------|-----------|
+| Motor data | D4 | 74HC595 DS |
+| Shift clock | D7 | 74HC595 SHCP |
+| Latch clock | D8 | 74HC595 STCP |
+| Motor A speed | D5 (PWM) | L293DNE EN1 |
+| Motor B speed | D6 (PWM) | L293DNE EN2 |
+| I2C SDA | A4 | I2C bus |
+| I2C SCL | A5 | I2C bus |
+
+---
+
+## 🔷 API Reference
+
+| Function | Description |
+|----------|-------------|
+| `robot.begin()` | Initialize the shield |
+| `robot.setSpeed(speed)` | Set motor speed (0–255) |
+| `robot.forward()` | Move robot forward |
+| `robot.backward()` | Move robot backward |
+| `robot.left()` | Turn robot left |
+| `robot.right()` | Turn robot right |
+| `robot.stop()` | Stop all motors |
+
+---
+
 ---
 
 ## 💡 Why This Shield Exists
