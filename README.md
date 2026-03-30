@@ -1,5 +1,5 @@
 
-<h1> BoticShieldV1</h1>
+**<h1> BoticShieldV1</h1>**
 <img width="881" height="846" alt="BoticsSheildV1" src="https://github.com/user-attachments/assets/fa18005a-ceb0-4d60-ac3c-1eb7f32861e7" />
 <div align="center">
 <h3>Official Arduino Library for the Botic Shield V1</h3>
@@ -68,7 +68,7 @@ void loop()  { robot.forward(); }
 7. [Motor Direction Logic](#-motor-direction-logic)
 8. [74HC595 Bit Map Reference](#-74hc595-bit-map-reference)
 9. [Examples in Detail](#-examples-in-detail)
-10. [Sensor & Peripheral Testing Guide)
+10. Sensor & Peripheral Testing Guide
 11. [Non-Blocking Movement](#-non-blocking-movement-with-millis)
 12. [Bluetooth Robot Project](#-complete-bluetooth-robot-project)
 13. [Troubleshooting Guide](#%EF%B8%8F-troubleshooting-guide)
