@@ -57,11 +57,56 @@ This library (**BoticShieldV1**) is the official software companion for the shie
 - 🔹 **Efficient Pin Usage** with 74HC595 shift register — control 4 motors using only 3 Arduino I/O pins, leaving the rest free for sensors
 
 - 🔹 **Complete Robot Movement** — full directional support with simple, readable function calls:
-  - `robot.forward()`
-  - `robot.backward()`
-  - `robot.left()`
-  - `robot.right()`
-  - `robot.stop()`
+## Complete API
+
+### Basic Movement
+
+```cpp
+robot.forward();
+robot.backward();
+robot.left();
+robot.right();
+robot.stop();
+```
+
+---
+
+### Sharp Turns (Advanced)
+
+```cpp
+robot.sharpLeft();
+robot.sharpRight();
+```
+
+👉 Tank turn (zero radius)
+
+---
+
+### Advanced Control
+
+```cpp
+robot.brake();
+robot.leftForward();
+robot.rightForward();
+```
+
+---
+
+### Speed Control
+
+```cpp
+robot.setSpeed(200);
+int s = robot.getSpeed();
+```
+
+---
+
+### Timed Movement
+
+```cpp
+robot.moveFor('F', 2000);
+```
+
 
 - 🔹 **Built-in PWM Speed Control** — smooth and adjustable motion using hardware PWM, set any speed from 0 to 255 with `robot.setSpeed()`
 
