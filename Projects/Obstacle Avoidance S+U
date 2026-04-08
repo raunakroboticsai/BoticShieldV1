@@ -1,0 +1,134 @@
+#include <Arduino.h>
+#include "BoticShieldV1.h"
+#include <Servo.h>
+
+BoticShieldV1 motor;
+
+#define TRIG A2
+#define ECHO A3
+
+#define SERVO_PIN 4
+Servo myServo;
+
+#define OBSTACLE_DIST 30
+#define CLEAR_MARGIN 5     // minimum difference to choose a side confidently
+
+int lastTurn = 0;         // -1 = left, +1 = right, 0 = none
+
+// -------- Stable distance (average of 2 readings) --------
+long readOnce() {
+  digitalWrite(TRIG, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(TRIG, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG, LOW);
+
+  long duration = pulseIn(ECHO, HIGH, 20000);
+  if (duration == 0) return 999;   // ignore invalid
+  return duration * 0.034 / 2;
+}
+
+long getDistance() {
+  long d1 = readOnce();
+  delay(10);
+  long d2 = readOnce();
+  return (d1 + d2) / 2;   // simple averaging
+}
+
+// -------- Setup --------
+void setup() {
+  pinMode(TRIG, OUTPUT);
+  pinMode(ECHO, INPUT);
+
+  myServo.attach(SERVO_PIN);
+  myServo.write(90);
+
+  motor.begin(70);
+}
+
+// -------- Main Loop --------
+void loop() {
+
+  long front = getDistance();
+
+  // NORMAL FORWARD
+  if (front > OBSTACLE_DIST) {
+    motor.forward();
+    return;
+  }
+
+  // Confirm obstacle (avoid false trigger)
+  delay(40);
+  front = getDistance();
+  if (front > OBSTACLE_DIST) {
+    motor.forward();
+    return;
+  }
+
+  // REAL OBSTACLE
+  motor.stop();
+  delay(120);
+
+  // LEFT scan
+  myServo.write(150);
+  delay(220);
+  long left = getDistance();
+
+  // RIGHT scan
+  myServo.write(30);
+  delay(220);
+  long right = getDistance();
+
+  // CENTER back
+  myServo.write(90);
+  delay(80);
+
+  // -------- SMART DECISION --------
+
+  int turnDir = 0;   // -1 left, +1 right
+
+  // Strong difference
+  if (abs(left - right) > CLEAR_MARGIN) {
+    turnDir = (left > right) ? -1 : +1;
+  }
+  else {
+    // similar distances → use memory (reduce oscillation)
+    if (lastTurn != 0) {
+      turnDir = lastTurn;
+    }
+    else {
+      // fallback
+      turnDir = (left > right) ? -1 : +1;
+    }
+  }
+
+  // -------- EXECUTE --------
+
+  if (turnDir == -1 && left > OBSTACLE_DIST) {
+    motor.sharpLeft();
+    delay(320);
+    lastTurn = -1;
+  }
+  else if (turnDir == +1 && right > OBSTACLE_DIST) {
+    motor.sharpRight();
+    delay(320);
+    lastTurn = +1;
+  }
+  else {
+    // both blocked → reverse + bias turn
+    motor.backward();
+    delay(300);
+
+    if (lastTurn <= 0) {
+      motor.sharpRight();
+      lastTurn = +1;
+    } else {
+      motor.sharpLeft();
+      lastTurn = -1;
+    }
+    delay(320);
+  }
+
+  motor.stop();
+}
